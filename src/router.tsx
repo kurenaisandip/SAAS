@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import RegisterPage from './pages/RegisterPage';
 import DashBoardLayout from './layouts/DashBoardLayout';
 import ProductPage from './pages/ProductPage';
+import AuthLayout from './layouts/AuthLayout';
 
 
  const router = createBrowserRouter(
@@ -27,14 +28,22 @@ import ProductPage from './pages/ProductPage';
         
     },
 
-        {
-       path: '/login',
-       element: <LoginPage />,
-        },
-        {
-            path: '/register',
-            element: <RegisterPage />,
-        },
+    {
+        path: 'auth',
+        element: <AuthLayout/>,
+        children: [
+            {
+                path: 'login',
+                element: <LoginPage />,
+                 },
+                 {
+                     path: 'register',
+                     element: <RegisterPage />,
+                 },
+        ],
+    },
+
+       
        
     ],
     );
