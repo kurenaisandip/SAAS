@@ -2,25 +2,22 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Form, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import {  Link } from "react-router-dom";
+import { useRef } from "react";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const navigate = useNavigate();
+const emailRef = useRef<HTMLInputElement>(null);
+const passwordRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Check if the email and password are correct
-    if (email === 'ramdevaba@patanjali.com' && password === 'asd') {
-      // Redirect to the dashboard
-      navigate('/dashboard');
-    } else {
-      // Show an error message
-      alert('Invalid email or password');
-    }
-  }
+const handleLogin = () => {
+  // Using optional chaining to safely access the current value of the refs
+  const email = emailRef.current?.value;
+  const password = passwordRef.current?.value;
+
+  // Here you would handle the login logic
+  console.log("Email:", email);
+  console.log("Password:", password);
+};
 
 
     return(
@@ -33,24 +30,24 @@ const LoginPage = () => {
           Enter your email below to login to your account.
         </CardDescription>
       </CardHeader>
-      <Form onSubmit={handleSubmit}>
+     
       <CardContent className="grid gap-4">
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="m@example.com" required />
+          <Input id="email" type="email" ref={emailRef}  placeholder="m@example.com" required />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} required />
+          <Input id="password" type="password" ref={passwordRef}  required />
         </div>
       </CardContent>
-      </Form>
+ 
       <CardFooter>
         <div className="w-full">
-        <Button className="w-full">Sign in</Button>
+        <Button onClick={handleLogin} className="w-full">Sign in</Button>
         <div className="mt-4 text-center text-sm">
           Don't have an account?
-          <Link to = {'/register'} className="underline">
+          <Link to = {'/auth/register'} className="underline">
             Sign up
           </Link>
         </div>
